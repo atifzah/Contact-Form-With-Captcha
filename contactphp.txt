@@ -1,0 +1,39 @@
+
+<?php
+$name=$_POST['name'];
+$email=$_POST['email'];
+$message=$_POST['message'];
+try
+{
+    $dbhost='localhost';
+    $dbname='aaa';
+    $dbuser='root';
+    $dbpass='';
+
+    $connect=new PDO("mysql:host=$dbhost;dbname=$dbname",$dbuser,$dbpass);
+    if($connect)
+    {
+        echo"connection done";
+    }
+    else
+    {
+        echo"error in connection try again";
+    }
+    $connect->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+    $sql="insert into contact values('".$name."','".$email."','".$message."')";
+    if($connect->query($sql))
+    {
+        echo"<script type='text/javascript'>alert('new record inserted successfully');</script>";
+    }
+    else
+    {
+        echo"<script type='text/javascript'>alert('Data not inserted successfully');</script>";     
+    }
+}
+catch(PDOException$e)
+{
+    echo"error:".$e->getMessage()."<br/>";
+    die();
+}
+
+?>
